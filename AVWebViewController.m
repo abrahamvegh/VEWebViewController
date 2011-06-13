@@ -59,6 +59,15 @@
 	[self updateUI];
 }
 
+- (void) viewWillDisappear: (BOOL) animated
+{
+	[super viewWillDisappear: animated];
+	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible: NO];
+	[self.webView stopLoading];
+
+	self.navigationController.toolbarHidden = YES;
+}
+
 - (BOOL) shouldAutorotateToInterfaceOrientation: (UIInterfaceOrientation) interfaceOrientation
 {
 	return interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
