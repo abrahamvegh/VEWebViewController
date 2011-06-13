@@ -138,7 +138,7 @@
 - (void) showActionSheet
 {
 // TODO: I would there to be some sort of delegate protocol for sending links to Instapaper
-	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle: self.webView.request.mainDocumentURL.absoluteString
+	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle: _currentURLString 
 															 delegate: self 
 													cancelButtonTitle: nil 
 											   destructiveButtonTitle: nil 
@@ -155,6 +155,16 @@
 
 #pragma mark -
 #pragma mark UIWebViewDelegate
+
+- (BOOL) webView: (UIWebView *) webView shouldStartLoadWithRequest: (NSURLRequest *) request 
+  navigationType: (UIWebViewNavigationType) navigationType
+{
+	[_currentURLString release];
+
+	_currentURLString = [request.URL.absoluteString copy];
+	
+	return YES;
+}
 
 - (void) webViewDidStartLoad: (UIWebView *) webView
 {
@@ -176,17 +186,16 @@
 
 - (void) actionSheet: (UIActionSheet *) actionSheet clickedButtonAtIndex: (NSInteger) buttonIndex
 {
-// FIXME: Fetching the URL from the webview request is non-reliable, and often gives back nothing
 	if (buttonIndex == 0)
 	{
-		[[UIApplication sharedApplication] openURL: self.webView.request.mainDocumentURL];
+		[[UIApplication sharedApplication] openURL: [NSURL URLWithString: _currentURLString]];
 	}
 	else if (buttonIndex == 1)
 	{
 		MFMailComposeViewController *composer = [[MFMailComposeViewController alloc] init]; 
 
 		[composer setMailComposeDelegate: self]; 
-		[composer setMessageBody: self.webView.request.mainDocumentURL.absoluteString isHTML: NO];
+		[composer setMessageBody: _currentURLString isHTML: NO];
 		[self presentModalViewController: composer animated: YES];
 		[composer release];
 	}

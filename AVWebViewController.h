@@ -12,6 +12,7 @@
 {
 	NSString *_URLString;
 @private
+	NSString                *_currentURLString;
 	UIWebView               *_webView;
 	UIBarButtonItem         *_backButton;
 	UIBarButtonItem         *_forwardButton;
