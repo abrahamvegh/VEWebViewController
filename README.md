@@ -8,6 +8,15 @@ It provides a `UIWebView` and controls for navigating the web view. It also prov
 
 `AVWebViewController` is largely inspired by and intended to mimic the look and feel of the in-app web browser in the official Twitter iPhone app.
 
+# What features does it have?
+
+* Full navigation: Back, Forward, Stop, Reload
+* Network status indicator in the status bar
+* Loading indicator in the toolbar
+* Landscape support
+* Action menu displays the current URL (usually — it’s still a little buggy ;)
+* Action menu items: Open in Safari, Mail Link
+
 # How do I use it?
 
 1. Include the contents of this repository in your Xcode project using your favorite method of moving stuff around. Drag-and-drop usually works.
