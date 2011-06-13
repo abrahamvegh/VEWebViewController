@@ -36,3 +36,8 @@ AVWebViewController *webViewController = [[AVWebViewController alloc] initWithUR
 # What license is this offered under?
 
 `AVWebViewController` is licensed under the BSD license. Check the `LICENSE` file for the full text and terms.
+
+# Screenshots
+
+<a href="http://c.abr.vg/1s2y3S2Z2p2H2o3w0I0B"><img src="http://f.cl.ly/items/0l3R2G0b0H2Q3r152m2e/AVWebViewController-Portrait.png" width="92" height="179" /></a>
+<a href="http://c.abr.vg/0P0P1k2y2M271O3G2A1U"><img src="http://f.cl.ly/items/121t0Z3X0R0f0Z3g2l0y/AVWebViewController-Landscape.png" width="179" height="92" /></a>
