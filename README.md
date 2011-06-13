@@ -14,7 +14,7 @@ It provides a `UIWebView` and controls for navigating the web view. It also prov
 * Network status indicator in the status bar
 * Loading indicator in the toolbar
 * Landscape support
-* Action menu displays the current URL (usually — it’s still a little buggy ;)
+* Action menu displays the current URL
 * Action menu items: Open in Safari, Mail Link
 
 # How do I use it?
