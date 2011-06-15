@@ -1,3 +1,4 @@
+Move images into a bundle
 Internationalize: Change all UI strings to use NSLocalizedString
 	Localize: Make localizations
 Reliability: Make storing and retrieving of the currently-navigated URL more (100%, if possible) reliable
