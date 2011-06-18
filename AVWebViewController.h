@@ -5,6 +5,7 @@
 //  Copyright 2011 Abraham Vegh. All rights reserved.
 //
 
+#import <objc/runtime.h>
 #import <UIKit/UIKit.h>
 #import <MessageUI/MessageUI.h>
 

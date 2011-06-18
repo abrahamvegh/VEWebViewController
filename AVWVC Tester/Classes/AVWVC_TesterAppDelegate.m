@@ -19,10 +19,28 @@
 
 - (BOOL) application: (UIApplication *) application didFinishLaunchingWithOptions: (NSDictionary *) launchOptions
 {
-	AVWebViewController *v = [[AVWebViewController alloc] initWithURLString: @"www.apple.com"];
-	UINavigationController *n = [[UINavigationController alloc] initWithRootViewController: v];
 
-	[self.window addSubview: n.view];
+	NSMutableArray *pushedViewControllers = [NSMutableArray array];
+	
+	#if 0 // Testing bottom bar handling
+	
+		UIViewController *testViewController = [[[UIViewController alloc] initWithNibName:nil bundle:nil] autorelease];
+		testViewController.title = @"Testie";	
+		testViewController.hidesBottomBarWhenPushed = YES;
+		[pushedViewControllers addObject:testViewController];
+	
+	#endif
+
+	AVWebViewController *webViewController = [[AVWebViewController alloc] initWithURLString: @"www.apple.com"];
+	[pushedViewControllers addObject:webViewController];
+	
+	UINavigationController *navigationController = [[UINavigationController alloc] initWithRootViewController:[pushedViewControllers objectAtIndex:0]];
+	
+	for (UIViewController *aVC in pushedViewControllers)
+	if (![navigationController.viewControllers containsObject:aVC])
+	[navigationController pushViewController:aVC animated:NO];
+	
+	self.window.rootViewController = navigationController;
 	[self.window makeKeyAndVisible];
 
 	return YES;

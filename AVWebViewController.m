@@ -54,6 +54,7 @@
 		return nil;
 		
 	self.representedURL = anURL;
+	self.hidesBottomBarWhenPushed = NO;
 		
 	return self;
 }
@@ -190,10 +191,15 @@
 	[self.webView loadRequest: [NSURLRequest requestWithURL: _representedURL]];
 }
 
+static NSString * const kAVWebViewControllerNavigationControllerToolbarWasHidden = @"kAVWebViewControllerNavigationControllerToolbarWasHidden";
+
 - (void) viewWillAppear: (BOOL) animated
 {
-    [super viewWillAppear: animated];
+	[super viewWillAppear: animated];
 
+	id boundValue = self.navigationController.toolbarHidden ? (id)kCFBooleanTrue : (id)kCFBooleanFalse;
+	objc_setAssociatedObject(self, kAVWebViewControllerNavigationControllerToolbarWasHidden, boundValue, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+	
 	self.navigationController.toolbarHidden = NO;
 
 	[self updateUI];
@@ -202,8 +208,11 @@
 - (void) viewWillDisappear: (BOOL) animated
 {
 	[self.webView stopLoading];
-
-	self.navigationController.toolbarHidden = YES;
+	
+	//	Em, the animation does not look very right for me
+	
+	[self.navigationController setToolbarHidden:[objc_getAssociatedObject(self, kAVWebViewControllerNavigationControllerToolbarWasHidden) boolValue] animated:animated];
+	objc_setAssociatedObject(self, kAVWebViewControllerNavigationControllerToolbarWasHidden, nil, OBJC_ASSOCIATION_ASSIGN);
 
 	[super viewWillDisappear: animated];
 }
@@ -252,7 +261,9 @@
 															 delegate: self 
 													cancelButtonTitle: nil 
 											   destructiveButtonTitle: nil 
-													otherButtonTitles: @"Open in Safari", nil];
+													otherButtonTitles: nil];
+													
+	[actionSheet addButtonWithTitle: @"Open in Safari"];
 
 	if ([MFMailComposeViewController canSendMail])
 		[actionSheet addButtonWithTitle: @"Mail Link"];
@@ -358,6 +369,7 @@
 	[_actionItem release];
 	[_fixedSpaceItem release];
 	[_flexibleSpaceItem release];
+	
 	[super dealloc];
 }
 
