@@ -25,24 +25,12 @@
 @end
 
 
-@interface AVWebViewController : UIViewController <UIWebViewDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate>
-{
-	NSString *_URLString;
-@private
-	UIWebView *_webView;
-	UIBarButtonItem *_backItem;
-	UIBarButtonItem *_forwardItem;
-	UIActivityIndicatorView *_indicatorView;
-	UIBarButtonItem *_indicatorItem;
-	UIBarButtonItem *_loadItem;
-	UIBarButtonItem *_actionItem;
-	UIBarButtonItem *_fixedSpaceItem;
-	UIBarButtonItem *_flexibleSpaceItem;
-}
+@interface AVWebViewController : UIViewController
 
-@property (nonatomic, copy) NSString *URLString; // Set this to navigate the web view to a new URL
-
+- (id) initWithURL: (NSURL *) anURL;
 - (id) initWithURLString: (NSString *) URLString;
+@property (nonatomic, copy) NSURL *representedURL;
+
 - (void) reload;
 
 @end

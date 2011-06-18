@@ -9,12 +9,14 @@
 
 #pragma mark Class continuation
 
-@interface AVWebViewController ()
+@interface AVWebViewController () <UIWebViewDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate>
 
 - (void) updateUI;
 - (void) updateToolbar;
 - (void) showActionSheet;
 - (void) stopLoading;
+
+- (void) setRepresentedURL:(NSURL *)newURL triggeringRequestLoad:(BOOL)shouldLoadRequestIfAppropriate;
 
 @property (nonatomic, retain) UIWebView *webView;
 @property (nonatomic, retain) UIBarButtonItem *backItem;
@@ -30,7 +32,7 @@
 
 @implementation AVWebViewController
 
-@synthesize URLString = _URLString;
+@synthesize representedURL = _representedURL;
 @synthesize webView = _webView;
 @synthesize backItem = _backItem;
 @synthesize forwardItem = _forwardItem;
@@ -45,10 +47,23 @@
 #pragma mark -
 #pragma mark Initialization
 
-- (id) initWithURLString: (NSString *) URLString
+- (id) initWithURL: (NSURL *) anURL
 {
 	self = [super initWithNibName: nil bundle: nil];
-	self.URLString = URLString;
+	if (!self)
+		return nil;
+		
+	self.representedURL = anURL;
+		
+	return self;
+}
+
+- (id) initWithURLString: (NSString *) URLString
+{
+	self = [self initWithURL:[NSURL URLWithString:URLString]];
+	
+	if (!self.representedURL.scheme)
+		self.representedURL = [NSURL URLWithString:[@"http://" stringByAppendingString:URLString]];
 
 	return self;
 }
@@ -56,20 +71,29 @@
 #pragma mark -
 #pragma mark Setter overrides
 
-- (void) setURLString: (NSString *) URLString
+
+
+- (void) setRepresentedURL:(NSURL *)newURL {
+
+	[self setRepresentedURL:newURL triggeringRequestLoad:YES];
+
+}
+
+- (void) setRepresentedURL:(NSURL *)newURL triggeringRequestLoad:(BOOL)shouldLoadRequestIfAppropriate 
 {
-	if (_URLString == URLString)
+	if (_representedURL == newURL || [_representedURL isEqual:newURL])
 		return;
 		
-	[self willChangeValueForKey:@"URLString"];
-	[_URLString release];
-	_URLString = [URLString copy];
-	[self didChangeValueForKey:@"URLString"];
+	[self willChangeValueForKey:@"representedURL"];
+	[_representedURL release];
+	_representedURL = [newURL copy];
+	[self didChangeValueForKey:@"representedURL"];
 
 	if (![self isViewLoaded])
 		return;
 		
-	[self.webView loadRequest: [NSURLRequest requestWithURL: [NSURL URLWithString: self.URLString]]];
+	if (shouldLoadRequestIfAppropriate)
+		[self.webView loadRequest: [NSURLRequest requestWithURL: _representedURL]];
 }
 
 #pragma mark -
@@ -165,7 +189,7 @@
 - (void) viewDidLoad
 {
 	[super viewDidLoad];
-	[self.webView loadRequest: [NSURLRequest requestWithURL: [NSURL URLWithString: self.URLString]]];
+	[self.webView loadRequest: [NSURLRequest requestWithURL: _representedURL]];
 }
 
 - (void) viewWillAppear: (BOOL) animated
@@ -226,7 +250,7 @@
 
 - (void) showActionSheet
 {
-	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle: self.URLString 
+	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle: [self.representedURL absoluteString]
 															 delegate: self 
 													cancelButtonTitle: nil 
 											   destructiveButtonTitle: nil 
@@ -251,16 +275,13 @@
 
 - (void) reload
 {
-	[self.webView loadRequest: [NSURLRequest requestWithURL: [NSURL URLWithString: self.URLString]]];
+	[self.webView loadRequest: [NSURLRequest requestWithURL: self.representedURL]];
 }
 
 - (BOOL) webView: (UIWebView *) webView shouldStartLoadWithRequest: (NSURLRequest *) request 
   navigationType: (UIWebViewNavigationType) navigationType
 {
-	[_URLString release];
-
-	_URLString = [request.URL.absoluteString copy];
-	
+	[self setRepresentedURL:request.URL triggeringRequestLoad:NO];
 	return YES;
 }
 
@@ -286,14 +307,14 @@
 {
 	if (buttonIndex == 0)
 	{
-		[[UIApplication sharedApplication] openURL: [NSURL URLWithString: self.URLString]];
+		[[UIApplication sharedApplication] openURL:self.representedURL];
 	}
 	else if (buttonIndex == 1)
 	{
 		MFMailComposeViewController *composer = [[MFMailComposeViewController alloc] init]; 
 
 		[composer setMailComposeDelegate: self]; 
-		[composer setMessageBody: self.URLString isHTML: NO];
+		[composer setMessageBody: [self.representedURL absoluteString] isHTML: NO];
 		[self presentModalViewController: composer animated: YES];
 		[composer release];
 	}
@@ -329,7 +350,7 @@
 
 - (void) dealloc
 {
-	[_URLString release];
+	[_representedURL release];
 	[_webView release];
 	[_backItem release];
 	[_forwardItem release];

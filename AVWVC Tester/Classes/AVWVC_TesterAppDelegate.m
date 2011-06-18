@@ -19,7 +19,7 @@
 
 - (BOOL) application: (UIApplication *) application didFinishLaunchingWithOptions: (NSDictionary *) launchOptions
 {
-	AVWebViewController *v = [[AVWebViewController alloc] initWithURLString: @"http://www.apple.com/"];
+	AVWebViewController *v = [[AVWebViewController alloc] initWithURLString: @"www.apple.com"];
 	UINavigationController *n = [[UINavigationController alloc] initWithRootViewController: v];
 
 	[self.window addSubview: n.view];
