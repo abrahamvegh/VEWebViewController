@@ -72,7 +72,7 @@
 - (UIBarButtonItem *) backItem
 {
 	if (_backItem == nil)
-		_backItem = [[UIBarButtonItem alloc] initWithImage: [UIImage imageNamed: @"back"] 
+		_backItem = [[UIBarButtonItem alloc] initWithImage: [UIImage imageNamed: @"AVWebViewController.bundle/back"] 
 													 style: UIBarButtonItemStylePlain 
 													target: self.webView 
 													action: @selector(goBack)];
@@ -85,7 +85,7 @@
 - (UIBarButtonItem *) forwardItem
 {
 	if (_forwardItem == nil)
-		_forwardItem = [[UIBarButtonItem alloc] initWithImage: [UIImage imageNamed: @"forward"] 
+		_forwardItem = [[UIBarButtonItem alloc] initWithImage: [UIImage imageNamed: @"AVWebViewController.bundle/forward"] 
 														style: UIBarButtonItemStylePlain 
 													   target: self.webView 
 													   action: @selector(goForward)];

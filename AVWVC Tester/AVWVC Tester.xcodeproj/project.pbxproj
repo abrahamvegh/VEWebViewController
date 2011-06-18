@@ -13,11 +13,8 @@
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
-		676B280213A5C4DE00A48359 /* AVWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 676B27FC13A5C4DE00A48359 /* AVWebViewController.m */; };
-		676B280413A5C4DE00A48359 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 676B27FE13A5C4DE00A48359 /* back.png */; };
-		676B280513A5C4DE00A48359 /* back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 676B27FF13A5C4DE00A48359 /* back@2x.png */; };
-		676B280613A5C4DE00A48359 /* forward.png in Resources */ = {isa = PBXBuildFile; fileRef = 676B280013A5C4DE00A48359 /* forward.png */; };
-		676B280713A5C4DE00A48359 /* forward@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 676B280113A5C4DE00A48359 /* forward@2x.png */; };
+		674EB17013AD596000F5D619 /* AVWebViewController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 674EB16F13AD596000F5D619 /* AVWebViewController.bundle */; };
+		674EB17813AD597700F5D619 /* AVWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 674EB17713AD597700F5D619 /* AVWebViewController.m */; };
 		676B280D13A5C4EA00A48359 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 676B280C13A5C4EA00A48359 /* MessageUI.framework */; };
 /* End PBXBuildFile section */
 
@@ -31,12 +28,9 @@
 		28AD733E0D9D9553002E5188 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		32CA4F630368D1EE00C91783 /* AVWVC_Tester_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVWVC_Tester_Prefix.pch; sourceTree = "<group>"; };
-		676B27FB13A5C4DE00A48359 /* AVWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AVWebViewController.h; path = ../../AVWebViewController.h; sourceTree = "<group>"; };
-		676B27FC13A5C4DE00A48359 /* AVWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AVWebViewController.m; path = ../../AVWebViewController.m; sourceTree = "<group>"; };
-		676B27FE13A5C4DE00A48359 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = back.png; path = ../../back.png; sourceTree = "<group>"; };
-		676B27FF13A5C4DE00A48359 /* back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "back@2x.png"; path = "../../back@2x.png"; sourceTree = "<group>"; };
-		676B280013A5C4DE00A48359 /* forward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = forward.png; path = ../../forward.png; sourceTree = "<group>"; };
-		676B280113A5C4DE00A48359 /* forward@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "forward@2x.png"; path = "../../forward@2x.png"; sourceTree = "<group>"; };
+		674EB16F13AD596000F5D619 /* AVWebViewController.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = AVWebViewController.bundle; path = ../AVWebViewController.bundle; sourceTree = SOURCE_ROOT; };
+		674EB17613AD597700F5D619 /* AVWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AVWebViewController.h; path = ../AVWebViewController.h; sourceTree = SOURCE_ROOT; };
+		674EB17713AD597700F5D619 /* AVWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AVWebViewController.m; path = ../AVWebViewController.m; sourceTree = SOURCE_ROOT; };
 		676B280C13A5C4EA00A48359 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		8D1107310486CEB800E47090 /* AVWVC_Tester-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "AVWVC_Tester-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -61,12 +55,9 @@
 			children = (
 				1D3623240D0F684500981E51 /* AVWVC_TesterAppDelegate.h */,
 				1D3623250D0F684500981E51 /* AVWVC_TesterAppDelegate.m */,
-				676B27FB13A5C4DE00A48359 /* AVWebViewController.h */,
-				676B27FC13A5C4DE00A48359 /* AVWebViewController.m */,
-				676B27FE13A5C4DE00A48359 /* back.png */,
-				676B27FF13A5C4DE00A48359 /* back@2x.png */,
-				676B280013A5C4DE00A48359 /* forward.png */,
-				676B280113A5C4DE00A48359 /* forward@2x.png */,
+				674EB17613AD597700F5D619 /* AVWebViewController.h */,
+				674EB17713AD597700F5D619 /* AVWebViewController.m */,
+				674EB16F13AD596000F5D619 /* AVWebViewController.bundle */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -170,10 +161,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
-				676B280413A5C4DE00A48359 /* back.png in Resources */,
-				676B280513A5C4DE00A48359 /* back@2x.png in Resources */,
-				676B280613A5C4DE00A48359 /* forward.png in Resources */,
-				676B280713A5C4DE00A48359 /* forward@2x.png in Resources */,
+				674EB17013AD596000F5D619 /* AVWebViewController.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -186,7 +174,7 @@
 			files = (
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
 				1D3623260D0F684500981E51 /* AVWVC_TesterAppDelegate.m in Sources */,
-				676B280213A5C4DE00A48359 /* AVWebViewController.m in Sources */,
+				674EB17813AD597700F5D619 /* AVWebViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
