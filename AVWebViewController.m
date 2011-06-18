@@ -58,12 +58,18 @@
 
 - (void) setURLString: (NSString *) URLString
 {
+	if (_URLString == URLString)
+		return;
+		
+	[self willChangeValueForKey:@"URLString"];
 	[_URLString release];
-
 	_URLString = [URLString copy];
+	[self didChangeValueForKey:@"URLString"];
 
-	if (self.webView != nil)
-		[self.webView loadRequest: [NSURLRequest requestWithURL: [NSURL URLWithString: self.URLString]]];
+	if (![self isViewLoaded])
+		return;
+		
+	[self.webView loadRequest: [NSURLRequest requestWithURL: [NSURL URLWithString: self.URLString]]];
 }
 
 #pragma mark -
