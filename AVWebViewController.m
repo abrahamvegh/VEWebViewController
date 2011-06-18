@@ -7,11 +7,24 @@
 
 #import "AVWebViewController.h"
 
+#pragma mark Class continuation
+
 @interface AVWebViewController ()
 
 - (void) updateUI;
 - (void) updateToolbar;
 - (void) showActionSheet;
+- (void) stopLoading;
+
+@property (nonatomic, retain) UIWebView *webView;
+@property (nonatomic, retain) UIBarButtonItem *backItem;
+@property (nonatomic, retain) UIBarButtonItem *forwardItem;
+@property (nonatomic, retain) UIActivityIndicatorView *indicatorView;
+@property (nonatomic, retain) UIBarButtonItem *indicatorItem;
+@property (nonatomic, retain) UIBarButtonItem *loadItem;
+@property (nonatomic, retain) UIBarButtonItem *actionItem;
+@property (nonatomic, retain) UIBarButtonItem *fixedSpaceItem;
+@property (nonatomic, retain) UIBarButtonItem *flexibleSpaceItem;
 
 @end
 
@@ -19,17 +32,29 @@
 
 @synthesize URLString = _URLString;
 @synthesize webView = _webView;
+@synthesize backItem = _backItem;
+@synthesize forwardItem = _forwardItem;
+@synthesize indicatorView = _indicatorView;
+@synthesize indicatorItem = _indicatorItem;
+@synthesize loadItem = _loadItem;
+@synthesize actionItem = _actionItem;
+@synthesize fixedSpaceItem = _fixedSpaceItem;
+@synthesize flexibleSpaceItem = _flexibleSpaceItem;
+
 
 #pragma mark -
 #pragma mark Initialization
 
 - (id) initWithURLString: (NSString *) URLString
 {
-	self = [super initWithNibName: @"AVWebViewController" bundle: nil];
-	_URLString = [URLString copy];
+	self = [super initWithNibName: nil bundle: nil];
+	self.URLString = URLString;
 
 	return self;
 }
+
+#pragma mark -
+#pragma mark Setter overrides
 
 - (void) setURLString: (NSString *) URLString
 {
@@ -37,35 +62,122 @@
 
 	_URLString = [URLString copy];
 
-	[self.webView loadRequest: [NSURLRequest requestWithURL: [NSURL URLWithString: self.URLString]]];
+	if (self.webView != nil)
+		[self.webView loadRequest: [NSURLRequest requestWithURL: [NSURL URLWithString: self.URLString]]];
+}
+
+#pragma mark -
+#pragma mark Getter overrides
+
+- (UIBarButtonItem *) backItem
+{
+	if (_backItem == nil)
+		_backItem = [[UIBarButtonItem alloc] initWithImage: [UIImage imageNamed: @"back"] 
+													 style: UIBarButtonItemStylePlain 
+													target: self.webView 
+													action: @selector(goBack)];
+
+	_backItem.enabled = self.webView.canGoBack;
+
+	return _backItem;
+}
+
+- (UIBarButtonItem *) forwardItem
+{
+	if (_forwardItem == nil)
+		_forwardItem = [[UIBarButtonItem alloc] initWithImage: [UIImage imageNamed: @"forward"] 
+														style: UIBarButtonItemStylePlain 
+													   target: self.webView 
+													   action: @selector(goForward)];
+
+	_forwardItem.enabled = self.webView.canGoForward;
+
+	return _forwardItem;
+}
+
+- (UIActivityIndicatorView *) indicatorView
+{
+	if (_indicatorView == nil)
+		_indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle: UIActivityIndicatorViewStyleWhite];
+
+	_indicatorView.hidesWhenStopped = YES;
+
+	return _indicatorView;
+}
+
+- (UIBarButtonItem *) indicatorItem
+{
+	if (_indicatorItem == nil)
+		_indicatorItem = [[UIBarButtonItem alloc] initWithCustomView: self.indicatorView];
+
+	return _indicatorItem;
+}
+
+- (UIBarButtonItem *) actionItem
+{
+	if (_actionItem == nil)
+		_actionItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemAction 
+																	target: self 
+																	action: @selector(showActionSheet)];
+
+	return _actionItem;
+}
+
+- (UIBarButtonItem *) fixedSpaceItem
+{
+	if (_fixedSpaceItem == nil)
+	{
+		_fixedSpaceItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemFixedSpace target: nil action: nil];
+		_fixedSpaceItem.width = 12.0;
+	}
+
+	return _fixedSpaceItem;
+}
+
+- (UIBarButtonItem *) flexibleSpaceItem
+{
+	if (_flexibleSpaceItem == nil)
+		_flexibleSpaceItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemFlexibleSpace target: nil action: nil];
+
+	return _flexibleSpaceItem;
 }
 
 #pragma mark -
 #pragma mark View lifecycle
 
+- (void) loadView
+{
+	[super loadView]; // technically illegal, may cause infinite recursion below if Apple changes how things work in the back
+
+	self.webView = [[[UIWebView alloc] initWithFrame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)] autorelease];
+	self.webView.delegate = self;
+	self.webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
+	self.webView.scalesPageToFit = YES;
+	self.view = self.webView;
+}
+
 - (void) viewDidLoad
 {
     [super viewDidLoad];
-// TODO: Do something intelligent when the network isn’t reachable
-	self.navigationController.toolbarHidden = NO;
-	self.webView.delegate = self;
-
 	[self.webView loadRequest: [NSURLRequest requestWithURL: [NSURL URLWithString: self.URLString]]];
 }
 
 - (void) viewWillAppear: (BOOL) animated
 {
     [super viewWillAppear: animated];
+
+	self.navigationController.toolbarHidden = NO;
+
 	[self updateUI];
 }
 
 - (void) viewWillDisappear: (BOOL) animated
 {
-	[super viewWillDisappear: animated];
-	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible: NO];
 	[self.webView stopLoading];
 
 	self.navigationController.toolbarHidden = YES;
+
+	[super viewWillDisappear: animated];
 }
 
 - (BOOL) shouldAutorotateToInterfaceOrientation: (UIInterfaceOrientation) interfaceOrientation
@@ -86,68 +198,29 @@
 
 - (void) updateToolbar
 {
-// TODO: Make this way more reuse-efficient than it is right now, because it totally blows right now
-	[_backButton release];
-	[_forwardButton release];
-	[_loadButton release];
-	[_actionButton release];
-
-	// Back button
-	_backButton = [[UIBarButtonItem alloc] initWithImage: [UIImage imageNamed: @"back"] 
-												   style: UIBarButtonItemStylePlain 
-												  target: self.webView 
-												  action: @selector(goBack)];
-	_backButton.enabled = self.webView.canGoBack;
-	
-	// Forward button
-	_forwardButton = [[UIBarButtonItem alloc] initWithImage: [UIImage imageNamed: @"forward"] 
-													  style: UIBarButtonItemStylePlain 
-													 target: self.webView 
-													 action: @selector(goForward)];
-	_forwardButton.enabled = self.webView.canGoForward;
-	
-	// Activity indicator
-	_indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle: UIActivityIndicatorViewStyleWhite];
-
-	self.webView.isLoading ? [_indicatorView startAnimating] : [_indicatorView stopAnimating] ;
-
-	// Stop/reload button
-	_loadButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: self.webView.isLoading ? UIBarButtonSystemItemStop : UIBarButtonSystemItemRefresh 
-																target: self.webView 
-																action: self.webView.isLoading ? @selector(stopLoading) : @selector(reload)];
-
-	// Action button
-	_actionButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemAction 
+	self.loadItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: self.webView.isLoading ? UIBarButtonSystemItemStop : UIBarButtonSystemItemRefresh 
 																  target: self 
-																  action: @selector(showActionSheet)];
-
-	// I had no idea you could reuse these, and maybe you can’t, but it seems like you can, so what the hell
-	UIBarButtonItem *flexibleSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemFlexibleSpace target: nil action: nil];
-	UIBarButtonItem *fixedSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemFixedSpace target: nil action: nil];
-	
-	fixedSpace.width = 12.0;
+																  action: self.webView.isLoading ? @selector(stopLoading) : @selector(reload)];
 	self.toolbarItems = [NSArray arrayWithObjects: 
-						 fixedSpace, 
-						 _backButton, 
-						 flexibleSpace, 
-						 _forwardButton, 
-						 flexibleSpace, 
-						 [[[UIBarButtonItem alloc] initWithCustomView: _indicatorView] autorelease], 
-						 flexibleSpace, 
-						 _loadButton, 
-						 flexibleSpace, 
-						 _actionButton, 
-						 fixedSpace, 
+						 self.fixedSpaceItem, 
+						 self.backItem, 
+						 self.flexibleSpaceItem, 
+						 self.forwardItem, 
+						 self.flexibleSpaceItem, 
+						 self.indicatorItem, 
+						 self.flexibleSpaceItem, 
+						 self.loadItem, 
+						 self.flexibleSpaceItem, 
+						 self.actionItem, 
+						 self.fixedSpaceItem, 
 						 nil];
 
-	[flexibleSpace release];
-	[fixedSpace release];
+	self.webView.isLoading ? [self.indicatorView startAnimating] : [self.indicatorView stopAnimating] ;
 }
 
 - (void) showActionSheet
 {
-// TODO: I would there to be some sort of delegate protocol for sending links to Instapaper
-	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle: _currentURLString 
+	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle: self.URLString 
 															 delegate: self 
 													cancelButtonTitle: nil 
 											   destructiveButtonTitle: nil 
@@ -165,12 +238,22 @@
 #pragma mark -
 #pragma mark UIWebViewDelegate
 
+- (void) stopLoading
+{
+	[self.webView stopLoading];
+}
+
+- (void) reload
+{
+	[self.webView loadRequest: [NSURLRequest requestWithURL: [NSURL URLWithString: self.URLString]]];
+}
+
 - (BOOL) webView: (UIWebView *) webView shouldStartLoadWithRequest: (NSURLRequest *) request 
   navigationType: (UIWebViewNavigationType) navigationType
 {
-	[_currentURLString release];
+	[_URLString release];
 
-	_currentURLString = [request.URL.absoluteString copy];
+	_URLString = [request.URL.absoluteString copy];
 	
 	return YES;
 }
@@ -197,14 +280,14 @@
 {
 	if (buttonIndex == 0)
 	{
-		[[UIApplication sharedApplication] openURL: [NSURL URLWithString: _currentURLString]];
+		[[UIApplication sharedApplication] openURL: [NSURL URLWithString: self.URLString]];
 	}
 	else if (buttonIndex == 1)
 	{
 		MFMailComposeViewController *composer = [[MFMailComposeViewController alloc] init]; 
 
 		[composer setMailComposeDelegate: self]; 
-		[composer setMessageBody: _currentURLString isHTML: NO];
+		[composer setMessageBody: self.URLString isHTML: NO];
 		[self presentModalViewController: composer animated: YES];
 		[composer release];
 	}
@@ -225,17 +308,32 @@
 
 - (void) viewDidUnload
 {
+	self.URLString = nil;
 	self.webView = nil;
+	self.backItem = nil;
+	self.forwardItem = nil;
+	self.indicatorView = nil;
+	self.indicatorItem = nil;
+	self.loadItem = nil;
+	self.actionItem = nil;
+	self.fixedSpaceItem = nil;
+	self.flexibleSpaceItem = nil;
+
+	[super viewDidUnload];
 }
 
 - (void) dealloc
 {
+	[_URLString release];
 	[_webView release];
-	[_backButton release];
-	[_forwardButton release];
+	[_backItem release];
+	[_forwardItem release];
 	[_indicatorView release];
-	[_loadButton release];
-	[_actionButton release];
+	[_indicatorItem release];
+	[_loadItem release];
+	[_actionItem release];
+	[_fixedSpaceItem release];
+	[_flexibleSpaceItem release];
 	[super dealloc];
 }
 

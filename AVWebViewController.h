@@ -12,19 +12,20 @@
 {
 	NSString *_URLString;
 @private
-	NSString                *_currentURLString;
-	UIWebView               *_webView;
-	UIBarButtonItem         *_backButton;
-	UIBarButtonItem         *_forwardButton;
+	UIWebView *_webView;
+	UIBarButtonItem *_backItem;
+	UIBarButtonItem *_forwardItem;
 	UIActivityIndicatorView *_indicatorView;
-	UIBarButtonItem         *_loadButton;
-	UIBarButtonItem         *_actionButton;
+	UIBarButtonItem *_indicatorItem;
+	UIBarButtonItem *_loadItem;
+	UIBarButtonItem *_actionItem;
+	UIBarButtonItem *_fixedSpaceItem;
+	UIBarButtonItem *_flexibleSpaceItem;
 }
 
-@property (nonatomic, copy) NSString *URLString;
-
-@property (nonatomic, retain) IBOutlet UIWebView *webView;
+@property (nonatomic, copy) NSString *URLString; // Set this to navigate the web view to a new URL
 
 - (id) initWithURLString: (NSString *) URLString;
+- (void) reload;
 
 @end
