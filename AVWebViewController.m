@@ -164,7 +164,7 @@
 
 - (void) viewDidLoad
 {
-    [super viewDidLoad];
+	[super viewDidLoad];
 	[self.webView loadRequest: [NSURLRequest requestWithURL: [NSURL URLWithString: self.URLString]]];
 }
 
@@ -314,7 +314,6 @@
 
 - (void) viewDidUnload
 {
-	self.URLString = nil;
 	self.webView = nil;
 	self.backItem = nil;
 	self.forwardItem = nil;
