@@ -14,7 +14,6 @@
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
 		676B280213A5C4DE00A48359 /* AVWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 676B27FC13A5C4DE00A48359 /* AVWebViewController.m */; };
-		676B280313A5C4DE00A48359 /* AVWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 676B27FD13A5C4DE00A48359 /* AVWebViewController.xib */; };
 		676B280413A5C4DE00A48359 /* back.png in Resources */ = {isa = PBXBuildFile; fileRef = 676B27FE13A5C4DE00A48359 /* back.png */; };
 		676B280513A5C4DE00A48359 /* back@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 676B27FF13A5C4DE00A48359 /* back@2x.png */; };
 		676B280613A5C4DE00A48359 /* forward.png in Resources */ = {isa = PBXBuildFile; fileRef = 676B280013A5C4DE00A48359 /* forward.png */; };
@@ -34,7 +33,6 @@
 		32CA4F630368D1EE00C91783 /* AVWVC_Tester_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVWVC_Tester_Prefix.pch; sourceTree = "<group>"; };
 		676B27FB13A5C4DE00A48359 /* AVWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AVWebViewController.h; path = ../../AVWebViewController.h; sourceTree = "<group>"; };
 		676B27FC13A5C4DE00A48359 /* AVWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AVWebViewController.m; path = ../../AVWebViewController.m; sourceTree = "<group>"; };
-		676B27FD13A5C4DE00A48359 /* AVWebViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = AVWebViewController.xib; path = ../../AVWebViewController.xib; sourceTree = "<group>"; };
 		676B27FE13A5C4DE00A48359 /* back.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = back.png; path = ../../back.png; sourceTree = "<group>"; };
 		676B27FF13A5C4DE00A48359 /* back@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "back@2x.png"; path = "../../back@2x.png"; sourceTree = "<group>"; };
 		676B280013A5C4DE00A48359 /* forward.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = forward.png; path = ../../forward.png; sourceTree = "<group>"; };
@@ -65,7 +63,6 @@
 				1D3623250D0F684500981E51 /* AVWVC_TesterAppDelegate.m */,
 				676B27FB13A5C4DE00A48359 /* AVWebViewController.h */,
 				676B27FC13A5C4DE00A48359 /* AVWebViewController.m */,
-				676B27FD13A5C4DE00A48359 /* AVWebViewController.xib */,
 				676B27FE13A5C4DE00A48359 /* back.png */,
 				676B27FF13A5C4DE00A48359 /* back@2x.png */,
 				676B280013A5C4DE00A48359 /* forward.png */,
@@ -173,7 +170,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
-				676B280313A5C4DE00A48359 /* AVWebViewController.xib in Resources */,
 				676B280413A5C4DE00A48359 /* back.png in Resources */,
 				676B280513A5C4DE00A48359 /* back@2x.png in Resources */,
 				676B280613A5C4DE00A48359 /* forward.png in Resources */,
