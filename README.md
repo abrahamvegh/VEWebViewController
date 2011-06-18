@@ -2,7 +2,7 @@
 
 `AVWebViewController` is a `UIViewController` subclass, for the iPhone, intended to be used inside a `UINavigationController`.
 
-It provides a `UIWebView` and controls for navigating the web view. It also provides a (buggy) action menu that allows you to open the current URL in Mobile Safari, or email the currently visible URL.
+It provides a `UIWebView` and the controls you’d expect to be available for navigating the web. It also provides an action menu that allows you to open the current URL in Mobile Safari, or email the current URL.
 
 `AV` stands for [Abraham Vegh](http://abrahamvegh.com/), the name of the guy who wrote this cheesy readme.
 
@@ -25,7 +25,7 @@ It provides a `UIWebView` and controls for navigating the web view. It also prov
 4. Create a new instance of `AVWebViewController` using the designated initializer, and (probably) push it onto your `UINavigationController` stack:
 
 ```
-AVWebViewController *webViewController = [[AVWebViewController alloc] initWithURLString: @"http://abr.vg/"];
+AVWebViewController *webViewController = [[AVWebViewController alloc] initWithURLString: @"http://www.apple.com/"];
 
 [self.navigationController pushViewController: webViewController animated: YES];
 [webViewController release];
