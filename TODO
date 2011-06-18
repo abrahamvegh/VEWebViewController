@@ -6,3 +6,8 @@ Reliability: Make storing and retrieving of the currently-navigated URL more (10
 	The action menu shouldn’t show strange URLs that are navigated by the web view load process, not the users
 Do something intelligent when the network isn’t reachable
 I would love there to be some sort of delegate protocol for sending links to Instapaper
+Intelligently handle edge cases:
+	Passing a URL without an HTTP or HTTPS should auto-prepend HTTP
+	Save toolbar state:
+		If the toolbar was already present, don’t remove it on pop
+		Basically don’t mess with the toolbar
