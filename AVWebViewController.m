@@ -147,9 +147,7 @@
 
 - (void) loadView
 {
-	[super loadView]; // technically illegal, may cause infinite recursion below if Apple changes how things work in the back
-
-	self.webView = [[[UIWebView alloc] initWithFrame: CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)] autorelease];
+	self.webView = [[[UIWebView alloc] initWithFrame: CGRectZero] autorelease];
 	self.webView.delegate = self;
 	self.webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	self.webView.scalesPageToFit = YES;
