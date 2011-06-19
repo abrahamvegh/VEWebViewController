@@ -254,7 +254,11 @@ static NSString * const kAVWebViewControllerNavigationControllerToolbarWasHidden
 
 - (void) showActionSheet
 {
-	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle: [self.representedURL absoluteString]
+	NSString *actionSheetTitle = [self.representedURL absoluteString];
+	
+	actionSheetTitle = [actionSheetTitle stringByReplacingOccurrencesOfString:@"(^http://)|(/$)" withString:@"" options:NSRegularExpressionSearch range:NSMakeRange(0, [actionSheetTitle length])];
+	
+	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle: actionSheetTitle
 															 delegate: self 
 													cancelButtonTitle: nil 
 											   destructiveButtonTitle: nil 
