@@ -9,7 +9,7 @@
 
 #pragma mark Class continuation
 
-@interface AVWebViewController ()
+@interface AVWebViewController () <UIWebViewDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate>
 
 - (void) updateUI;
 - (void) updateToolbar;
@@ -40,7 +40,6 @@
 @synthesize actionItem = _actionItem;
 @synthesize fixedSpaceItem = _fixedSpaceItem;
 @synthesize flexibleSpaceItem = _flexibleSpaceItem;
-
 
 #pragma mark -
 #pragma mark Initialization
@@ -224,16 +223,18 @@
 
 - (void) showActionSheet
 {
-	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle: self.URLString 
+	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle: [self.representedURL absoluteString]
 															 delegate: self 
 													cancelButtonTitle: nil 
 											   destructiveButtonTitle: nil 
-													otherButtonTitles: @"Open in Safari", nil];
+													otherButtonTitles: nil];
+													
+	[actionSheet addButtonWithTitle: NSLocalizedString(@"Open in Safari", @"Open in Safari")];
 
 	if ([MFMailComposeViewController canSendMail])
-		[actionSheet addButtonWithTitle: @"Mail Link"];
+		[actionSheet addButtonWithTitle: NSLocalizedString(@"Mail Link", @"Mail Link")];
 
-	[actionSheet addButtonWithTitle: @"Cancel"];
+	[actionSheet addButtonWithTitle: NSLocalizedString(@"Cancel", @"Cancel")];
 	[actionSheet setCancelButtonIndex: actionSheet.numberOfButtons - 1];
 	[actionSheet showFromToolbar: self.navigationController.toolbar];
 	[actionSheet release];
@@ -337,6 +338,7 @@
 	[_actionItem release];
 	[_fixedSpaceItem release];
 	[_flexibleSpaceItem release];
+
 	[super dealloc];
 }
 
