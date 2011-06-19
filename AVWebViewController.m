@@ -260,12 +260,12 @@ static NSString * const kAVWebViewControllerNavigationControllerToolbarWasHidden
 											   destructiveButtonTitle: nil 
 													otherButtonTitles: nil];
 													
-	[actionSheet addButtonWithTitle: @"Open in Safari"];
+	[actionSheet addButtonWithTitle: NSLocalizedString(@"Open in Safari", @"Open in Safari")];
 
 	if ([MFMailComposeViewController canSendMail])
-		[actionSheet addButtonWithTitle: @"Mail Link"];
+		[actionSheet addButtonWithTitle: NSLocalizedString(@"Mail Link", @"Mail Link")];
 
-	[actionSheet addButtonWithTitle: @"Cancel"];
+	[actionSheet addButtonWithTitle: NSLocalizedString(@"Cancel", @"Cancel")];
 	[actionSheet setCancelButtonIndex: actionSheet.numberOfButtons - 1];
 	[actionSheet showFromToolbar: self.navigationController.toolbar];
 	[actionSheet release];
