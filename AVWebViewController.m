@@ -223,12 +223,12 @@
 
 - (void) showActionSheet
 {
-	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle: [self.representedURL absoluteString]
+	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle: self.URLString 
 															 delegate: self 
 													cancelButtonTitle: nil 
 											   destructiveButtonTitle: nil 
 													otherButtonTitles: nil];
-													
+
 	[actionSheet addButtonWithTitle: NSLocalizedString(@"Open in Safari", @"Open in Safari")];
 
 	if ([MFMailComposeViewController canSendMail])
@@ -338,7 +338,6 @@
 	[_actionItem release];
 	[_fixedSpaceItem release];
 	[_flexibleSpaceItem release];
-
 	[super dealloc];
 }
 
