@@ -72,12 +72,9 @@
 #pragma mark -
 #pragma mark Setter overrides
 
-
-
-- (void) setRepresentedURL:(NSURL *)newURL {
-
+- (void) setRepresentedURL:(NSURL *)newURL
+{
 	[self setRepresentedURL:newURL triggeringRequestLoad:YES];
-
 }
 
 - (void) setRepresentedURL:(NSURL *)newURL triggeringRequestLoad:(BOOL)shouldLoadRequestIfAppropriate 
