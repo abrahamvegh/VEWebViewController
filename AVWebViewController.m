@@ -225,7 +225,14 @@
 
 - (void) showActionSheet
 {
-	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle: self.URLString 
+	NSString *actionSheetTitle = self.URLString;
+
+	actionSheetTitle = [actionSheetTitle stringByReplacingOccurrencesOfString: @"(^http://)|(/$)" 
+																   withString: @"" 
+																	  options: NSRegularExpressionSearch 
+																		range: NSMakeRange(0, actionSheetTitle.length)];
+
+	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle: actionSheetTitle 
 															 delegate: self 
 													cancelButtonTitle: nil 
 											   destructiveButtonTitle: nil 
