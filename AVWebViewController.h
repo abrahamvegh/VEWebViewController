@@ -10,22 +10,8 @@
 
 @interface AVWebViewController : UIViewController
 {
-	NSString *_URLString;
-@private
-	UIWebView *_webView;
-	UIBarButtonItem *_backItem;
-	UIBarButtonItem *_forwardItem;
-	UIActivityIndicatorView *_indicatorView;
-	UIBarButtonItem *_indicatorItem;
-	UIBarButtonItem *_loadItem;
-	UIBarButtonItem *_actionItem;
-	UIBarButtonItem *_fixedSpaceItem;
-	UIBarButtonItem *_flexibleSpaceItem;
 }
 
-@property (nonatomic, copy) NSString *URLString; // Set this to navigate the web view to a new URL
-
 - (id) initWithURLString: (NSString *) URLString;
-- (void) reload;
 
 @end

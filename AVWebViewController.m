@@ -7,158 +7,75 @@
 
 #import "AVWebViewController.h"
 
-#pragma mark Class continuation
-
 @interface AVWebViewController () <UIWebViewDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate>
 
-- (void) updateUI;
-- (void) updateToolbar;
-- (void) showActionSheet;
-- (void) stopLoading;
+@property BOOL toolbarWasHidden;
+@property (retain) UIWebView *webView;
+@property (copy) NSString *URLString;
+@property NSInteger activityCount;
 
-@property (nonatomic, retain) UIWebView *webView;
-@property (nonatomic, retain) UIBarButtonItem *backItem;
-@property (nonatomic, retain) UIBarButtonItem *forwardItem;
-@property (nonatomic, retain) UIActivityIndicatorView *indicatorView;
-@property (nonatomic, retain) UIBarButtonItem *indicatorItem;
-@property (nonatomic, retain) UIBarButtonItem *loadItem;
-@property (nonatomic, retain) UIBarButtonItem *actionItem;
-@property (nonatomic, retain) UIBarButtonItem *fixedSpaceItem;
-@property (nonatomic, retain) UIBarButtonItem *flexibleSpaceItem;
+- (void) UI;
+- (void) captureURLString: (NSString *) URLString;
+- (void) showActionSheet;
 
 @end
 
 @implementation AVWebViewController
 
-@synthesize URLString = _URLString;
+@synthesize toolbarWasHidden = _toolbarWasHidden;
 @synthesize webView = _webView;
-@synthesize backItem = _backItem;
-@synthesize forwardItem = _forwardItem;
-@synthesize indicatorView = _indicatorView;
-@synthesize indicatorItem = _indicatorItem;
-@synthesize loadItem = _loadItem;
-@synthesize actionItem = _actionItem;
-@synthesize fixedSpaceItem = _fixedSpaceItem;
-@synthesize flexibleSpaceItem = _flexibleSpaceItem;
+@synthesize URLString = _URLString;
+@synthesize activityCount = _activityCount;
 
-#pragma mark -
-#pragma mark Initialization
+- (void) setActivityCount: (NSInteger) count
+{
+	_activityCount = MAX(count, 0);
+}
+
+- (void) viewDidUnload
+{
+	self.webView.delegate = nil;
+	self.webView = nil;
+	self.URLString = nil;
+
+	[super viewDidUnload];
+}
+
+- (void) dealloc
+{
+	[_webView release];
+	[_URLString release];
+	[super dealloc];
+}
 
 - (id) initWithURLString: (NSString *) URLString
 {
 	self = [super initWithNibName: nil bundle: nil];
-	self.URLString = URLString;
 
+	if (self)
+	{
+		self.URLString = URLString;
+	}
+	
 	return self;
 }
-
-#pragma mark -
-#pragma mark Setter overrides
-
-- (void) setURLString: (NSString *) URLString
-{
-	if (_URLString == URLString)
-		return;
-
-	[self willChangeValueForKey: @"URLString"];
-	[_URLString release];
-
-	_URLString = [URLString copy];
-
-	[self didChangeValueForKey: @"URLString"];
-
-	if (![self isViewLoaded])
-		return;
-
-	[self.webView loadRequest: [NSURLRequest requestWithURL: [NSURL URLWithString: self.URLString]]];
-}
-
-#pragma mark -
-#pragma mark Getter overrides
-
-- (UIBarButtonItem *) backItem
-{
-	if (_backItem == nil)
-		_backItem = [[UIBarButtonItem alloc] initWithImage: [UIImage imageNamed: @"AVWebViewController.bundle/back"] 
-													 style: UIBarButtonItemStylePlain 
-													target: self.webView 
-													action: @selector(goBack)];
-
-	_backItem.enabled = self.webView.canGoBack;
-
-	return _backItem;
-}
-
-- (UIBarButtonItem *) forwardItem
-{
-	if (_forwardItem == nil)
-		_forwardItem = [[UIBarButtonItem alloc] initWithImage: [UIImage imageNamed: @"AVWebViewController.bundle/forward"] 
-														style: UIBarButtonItemStylePlain 
-													   target: self.webView 
-													   action: @selector(goForward)];
-
-	_forwardItem.enabled = self.webView.canGoForward;
-
-	return _forwardItem;
-}
-
-- (UIActivityIndicatorView *) indicatorView
-{
-	if (_indicatorView == nil)
-		_indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle: UIActivityIndicatorViewStyleWhite];
-
-	_indicatorView.hidesWhenStopped = YES;
-
-	return _indicatorView;
-}
-
-- (UIBarButtonItem *) indicatorItem
-{
-	if (_indicatorItem == nil)
-		_indicatorItem = [[UIBarButtonItem alloc] initWithCustomView: self.indicatorView];
-
-	return _indicatorItem;
-}
-
-- (UIBarButtonItem *) actionItem
-{
-	if (_actionItem == nil)
-		_actionItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemAction 
-																	target: self 
-																	action: @selector(showActionSheet)];
-
-	return _actionItem;
-}
-
-- (UIBarButtonItem *) fixedSpaceItem
-{
-	if (_fixedSpaceItem == nil)
-	{
-		_fixedSpaceItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemFixedSpace target: nil action: nil];
-		_fixedSpaceItem.width = 12.0;
-	}
-
-	return _fixedSpaceItem;
-}
-
-- (UIBarButtonItem *) flexibleSpaceItem
-{
-	if (_flexibleSpaceItem == nil)
-		_flexibleSpaceItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemFlexibleSpace target: nil action: nil];
-
-	return _flexibleSpaceItem;
-}
-
-#pragma mark -
-#pragma mark View lifecycle
 
 - (void) loadView
 {
 	self.webView = [[[UIWebView alloc] initWithFrame: CGRectZero] autorelease];
 	self.webView.delegate = self;
-	self.webView.autoresizingMask = UIViewAutoresizingFlexibleWidth | UIViewAutoresizingFlexibleHeight;
 	self.webView.scalesPageToFit = YES;
 	self.view = self.webView;
+}
+
+- (BOOL) shouldAutorotateToInterfaceOrientation: (UIInterfaceOrientation) interfaceOrientation
+{
+	return interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
+}
+
+- (void) willAnimateRotationToInterfaceOrientation: (UIInterfaceOrientation) interfaceOrientation duration: (NSTimeInterval) duration
+{
+	[self.webView setNeedsLayout];
 }
 
 - (void) viewDidLoad
@@ -169,70 +86,86 @@
 
 - (void) viewWillAppear: (BOOL) animated
 {
-    [super viewWillAppear: animated];
+	[super viewWillAppear: animated];
 
-	self.navigationController.toolbarHidden = NO;
+	self.toolbarWasHidden = self.navigationController.isToolbarHidden;
 
-	[self updateUI];
+	if (self.toolbarWasHidden)
+		[self.navigationController setToolbarHidden: NO animated: animated];
+}
+
+- (void) viewDidAppear: (BOOL) animated
+{
+	if (self.navigationController.isToolbarHidden)
+		[self.navigationController setToolbarHidden: NO animated: animated];
 }
 
 - (void) viewWillDisappear: (BOOL) animated
 {
-	[self.webView stopLoading];
-
-	self.navigationController.toolbarHidden = YES;
-
 	[super viewWillDisappear: animated];
+
+	if (self.toolbarWasHidden)
+		[self.navigationController setToolbarHidden: YES animated: animated];
 }
 
-- (BOOL) shouldAutorotateToInterfaceOrientation: (UIInterfaceOrientation) interfaceOrientation
+- (void) UI
 {
-	return interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown;
-}
-
-#pragma mark -
-#pragma mark Control UI
-
-- (void) updateUI
-{
-	[[UIApplication sharedApplication] setNetworkActivityIndicatorVisible: self.webView.isLoading];
-	[self updateToolbar];
-
 	self.title = [self.webView stringByEvaluatingJavaScriptFromString: @"document.title"];
-}
 
-- (void) updateToolbar
-{
-	self.loadItem = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: self.webView.isLoading ? UIBarButtonSystemItemStop : UIBarButtonSystemItemRefresh 
-																  target: self 
-																  action: self.webView.isLoading ? @selector(stopLoading) : @selector(reload)];
-	self.toolbarItems = [NSArray arrayWithObjects: 
-						 self.fixedSpaceItem, 
-						 self.backItem, 
-						 self.flexibleSpaceItem, 
-						 self.forwardItem, 
-						 self.flexibleSpaceItem, 
-						 self.indicatorItem, 
-						 self.flexibleSpaceItem, 
-						 self.loadItem, 
-						 self.flexibleSpaceItem, 
-						 self.actionItem, 
-						 self.fixedSpaceItem, 
-						 nil];
+	UIBarButtonItem *fixedSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemFixedSpace target: nil action: nil];
+	UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage: [UIImage imageNamed: @"AVWebViewController.bundle/back"] style: UIBarButtonItemStylePlain target: self.webView action: @selector(goBack)];
+	UIBarButtonItem *flexibleSpace1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemFlexibleSpace target: nil action: nil];
+	UIBarButtonItem *forwardButton = [[UIBarButtonItem alloc] initWithImage: [UIImage imageNamed: @"AVWebViewController.bundle/forward"] style: UIBarButtonItemStylePlain target: self.webView action: @selector(goForward)];
+	UIBarButtonItem *flexibleSpace2 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemFlexibleSpace target: nil action: nil];
+	UIActivityIndicatorView *indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle: UIActivityIndicatorViewStyleWhite];
+	UIBarButtonItem *indicatorItem = [[UIBarButtonItem alloc] initWithCustomView: indicatorView];
+	UIBarButtonItem *flexibleSpace4 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemFlexibleSpace target: nil action: nil];
+	UIBarButtonItem *controlButton = nil;
+	
+	if (self.activityCount > 0)
+		controlButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemStop target: self.webView action: @selector(stopLoading)];
+	else
+		controlButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemRefresh target: self.webView action: @selector(reload)];
+	
+	UIBarButtonItem *flexibleSpace6 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemFlexibleSpace target: nil action: nil];
+	UIBarButtonItem *actionButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemAction target: self action: @selector(showActionSheet)];
+	
+	fixedSpace.width = 12.0;
+	backButton.enabled = self.webView.canGoBack;
+	forwardButton.enabled = self.webView.canGoForward;
 
-	self.webView.isLoading ? [self.indicatorView startAnimating] : [self.indicatorView stopAnimating] ;
+	if (self.activityCount > 0) [indicatorView startAnimating];
+
+	self.toolbarItems = [NSArray arrayWithObjects: fixedSpace, backButton, flexibleSpace1, forwardButton, flexibleSpace2, 
+						 indicatorItem, flexibleSpace4, controlButton, flexibleSpace6, actionButton, fixedSpace, nil];
+	
+	[fixedSpace release];
+	[backButton release];
+	[flexibleSpace1 release];
+	[forwardButton release];
+	[flexibleSpace2 release];
+	[indicatorView release];
+	[indicatorItem release];
+	[flexibleSpace4 release];
+	[controlButton release];
+	[flexibleSpace6 release];
+	[actionButton release];
 }
 
 - (void) showActionSheet
 {
-	NSString *actionSheetTitle = self.URLString;
+//	NSString *actionSheetTitle = self.URLString;
+//
+//	actionSheetTitle = [actionSheetTitle stringByReplacingOccurrencesOfString: @"(^http://)|(/$)" 
+//																   withString: @"" 
+//																	  options: NSRegularExpressionSearch 
+//																		range: NSMakeRange(0, actionSheetTitle.length)];
+//
+//	if ([[actionSheetTitle substringToIndex: 4] isEqualToString: @"www."])
+//		actionSheetTitle = [actionSheetTitle substringFromIndex: 4];
 
-	actionSheetTitle = [actionSheetTitle stringByReplacingOccurrencesOfString: @"(^http://)|(/$)" 
-																   withString: @"" 
-																	  options: NSRegularExpressionSearch 
-																		range: NSMakeRange(0, actionSheetTitle.length)];
-
-	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle: actionSheetTitle 
+//	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle: actionSheetTitle 
+	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle: self.URLString 
 															 delegate: self 
 													cancelButtonTitle: nil 
 											   destructiveButtonTitle: nil 
@@ -249,45 +182,6 @@
 	[actionSheet release];
 }
 
-#pragma mark -
-#pragma mark UIWebViewDelegate
-
-- (void) stopLoading
-{
-	[self.webView stopLoading];
-}
-
-- (void) reload
-{
-	[self.webView loadRequest: [NSURLRequest requestWithURL: [NSURL URLWithString: self.URLString]]];
-}
-
-- (BOOL) webView: (UIWebView *) webView shouldStartLoadWithRequest: (NSURLRequest *) request 
-  navigationType: (UIWebViewNavigationType) navigationType
-{
-	[_URLString release];
-
-	_URLString = [request.URL.absoluteString copy];
-	
-	return YES;
-}
-
-- (void) webViewDidStartLoad: (UIWebView *) webView
-{
-	[self updateUI];
-}
-
-- (void) webViewDidFinishLoad: (UIWebView *) webView
-{
-	[self updateUI];
-}
-
-- (void) webView: (UIWebView *) webView didFailLoadWithError: (NSError *) error
-{
-	[self updateUI];
-}
-
-#pragma mark -
 #pragma mark UIActionSheetDelegate
 
 - (void) actionSheet: (UIActionSheet *) actionSheet clickedButtonAtIndex: (NSInteger) buttonIndex
@@ -299,15 +193,15 @@
 	else if (buttonIndex == 1)
 	{
 		MFMailComposeViewController *composer = [[MFMailComposeViewController alloc] init]; 
-
-		[composer setMailComposeDelegate: self]; 
+		
+		[composer setMailComposeDelegate: self];
+		[composer setSubject: [self.webView stringByEvaluatingJavaScriptFromString: @"document.title"]];
 		[composer setMessageBody: self.URLString isHTML: NO];
 		[self presentModalViewController: composer animated: YES];
 		[composer release];
 	}
 }
 
-#pragma mark -
 #pragma mark MFMailComposeViewControllerDelegate
 
 - (void) mailComposeController: (MFMailComposeViewController *) controller 
@@ -317,37 +211,42 @@
 	[controller dismissModalViewControllerAnimated: YES];
 }
 
-#pragma mark -
-#pragma mark Memory management
+#pragma mark UIWebViewDelegate
 
-- (void) viewDidUnload
+- (void) captureURLString: (NSString *) URLString
 {
-	self.webView = nil;
-	self.backItem = nil;
-	self.forwardItem = nil;
-	self.indicatorView = nil;
-	self.indicatorItem = nil;
-	self.loadItem = nil;
-	self.actionItem = nil;
-	self.fixedSpaceItem = nil;
-	self.flexibleSpaceItem = nil;
-
-	[super viewDidUnload];
+	if (self.activityCount == 0) self.URLString = URLString;
 }
 
-- (void) dealloc
+- (BOOL) webView: (UIWebView *) webView shouldStartLoadWithRequest: (NSURLRequest *) request 
+  navigationType: (UIWebViewNavigationType) navigationType
 {
-	[_URLString release];
-	[_webView release];
-	[_backItem release];
-	[_forwardItem release];
-	[_indicatorView release];
-	[_indicatorItem release];
-	[_loadItem release];
-	[_actionItem release];
-	[_fixedSpaceItem release];
-	[_flexibleSpaceItem release];
-	[super dealloc];
+	[self captureURLString: request.URL.absoluteString];
+	[self UI];
+
+	return YES;
+}
+
+- (void) webViewDidStartLoad: (UIWebView *) webView
+{
+	self.activityCount += 1;
+
+	[self UI];
+}
+
+- (void) webViewDidFinishLoad: (UIWebView *) webView
+{
+	self.activityCount -= 1;
+
+	[self captureURLString: webView.request.URL.absoluteString];
+	[self UI];
+}
+
+- (void) webView: (UIWebView *) webView didFailLoadWithError: (NSError *) error
+{
+	self.activityCount -= 1;
+
+	[self UI];
 }
 
 @end
