@@ -154,17 +154,6 @@
 
 - (void) showActionSheet
 {
-//	NSString *actionSheetTitle = self.URLString;
-//
-//	actionSheetTitle = [actionSheetTitle stringByReplacingOccurrencesOfString: @"(^http://)|(/$)" 
-//																   withString: @"" 
-//																	  options: NSRegularExpressionSearch 
-//																		range: NSMakeRange(0, actionSheetTitle.length)];
-//
-//	if ([[actionSheetTitle substringToIndex: 4] isEqualToString: @"www."])
-//		actionSheetTitle = [actionSheetTitle substringFromIndex: 4];
-
-//	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle: actionSheetTitle 
 	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle: self.URLString 
 															 delegate: self 
 													cancelButtonTitle: nil 
