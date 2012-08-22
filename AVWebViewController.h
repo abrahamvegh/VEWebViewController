@@ -13,5 +13,6 @@
 }
 
 - (id) initWithURLString: (NSString *) URLString;
+- (id) initWithRequest: (NSURLRequest *)request;
 
 @end
