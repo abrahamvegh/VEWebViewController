@@ -11,12 +11,12 @@
 
 @property BOOL toolbarWasHidden;
 @property (retain) UIWebView *webView;
-@property (copy) NSString *URLString;
-@property NSInteger activityCount;
+@property (retain, nonatomic) NSURLRequest *currentRequest;
+@property (nonatomic, readonly) NSString *URLString;
+@property (nonatomic) NSInteger activityCount;
 
 - (void) UI;
-- (void) captureURLString: (NSString *) URLString;
-- (void) showActionSheet;
+- (void) showActionSheet:(id)sender;
 
 @end
 
@@ -24,8 +24,16 @@
 
 @synthesize toolbarWasHidden = _toolbarWasHidden;
 @synthesize webView = _webView;
-@synthesize URLString = _URLString;
+@synthesize currentRequest = _currentRequest;
 @synthesize activityCount = _activityCount;
+
+- (NSString *) URLString
+{
+    if (_currentRequest) {
+        return self.currentRequest.URL.absoluteString;
+    }
+    return nil;
+}
 
 - (void) setActivityCount: (NSInteger) count
 {
@@ -36,7 +44,7 @@
 {
 	self.webView.delegate = nil;
 	self.webView = nil;
-	self.URLString = nil;
+	self.currentRequest = nil;
 
 	[super viewDidUnload];
 }
@@ -44,20 +52,23 @@
 - (void) dealloc
 {
 	[_webView release];
-	[_URLString release];
+	[_currentRequest release];
 	[super dealloc];
+}
+
+-(id)initWithRequest:(NSURLRequest *)request {
+    self = [super init];
+    if (self) {
+        _activityCount = 0;
+        self.currentRequest = request;
+    }
+    return self;
 }
 
 - (id) initWithURLString: (NSString *) URLString
 {
-	self = [super initWithNibName: nil bundle: nil];
-
-	if (self)
-	{
-		self.URLString = URLString;
-	}
-	
-	return self;
+    NSURLRequest *request = [NSURLRequest requestWithURL:[NSURL URLWithString:URLString]];
+	return [self initWithRequest:request];
 }
 
 - (void) loadView
@@ -81,7 +92,15 @@
 - (void) viewDidLoad
 {
 	[super viewDidLoad];
-	[self.webView loadRequest: [NSURLRequest requestWithURL: [NSURL URLWithString: self.URLString]]];
+    if (self.presentingViewController) {
+        UIBarButtonItem *closeButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Close"
+                                                                            style:UIBarButtonItemStyleDone
+                                                                           target:self
+                                                                           action:@selector(closeButtonTapped:)];
+        
+        self.navigationItem.rightBarButtonItem = closeButtonItem;
+    }
+	[self.webView loadRequest:self.currentRequest];
 }
 
 - (void) viewWillAppear: (BOOL) animated
@@ -128,7 +147,7 @@
 		controlButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemRefresh target: self.webView action: @selector(reload)];
 	
 	UIBarButtonItem *flexibleSpace6 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemFlexibleSpace target: nil action: nil];
-	UIBarButtonItem *actionButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemAction target: self action: @selector(showActionSheet)];
+	UIBarButtonItem *actionButton = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemAction target: self action: @selector(showActionSheet:)];
 	
 	fixedSpace.width = 12.0;
 	backButton.enabled = self.webView.canGoBack;
@@ -152,7 +171,12 @@
 	[actionButton release];
 }
 
-- (void) showActionSheet
+- (void)closeButtonTapped:(id)sender
+{
+    [self dismissViewControllerAnimated:YES completion:NULL];
+}
+
+- (void) showActionSheet:(id)sender
 {
 	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle: self.URLString 
 															 delegate: self 
@@ -167,7 +191,7 @@
 
 	[actionSheet addButtonWithTitle: NSLocalizedString(@"Cancel", @"Cancel")];
 	[actionSheet setCancelButtonIndex: actionSheet.numberOfButtons - 1];
-	[actionSheet showFromToolbar: self.navigationController.toolbar];
+	[actionSheet showFromBarButtonItem:sender animated:YES];
 	[actionSheet release];
 }
 
@@ -177,7 +201,7 @@
 {
 	if (buttonIndex == 0)
 	{
-		[[UIApplication sharedApplication] openURL: [NSURL URLWithString: self.URLString]];
+		[[UIApplication sharedApplication] openURL:self.currentRequest.URL];
 	}
 	else if (buttonIndex == 1)
 	{
@@ -202,15 +226,15 @@
 
 #pragma mark UIWebViewDelegate
 
-- (void) captureURLString: (NSString *) URLString
+- (void) setCurrentRequest:(NSURLRequest *)currentRequest;
 {
-	if (self.activityCount == 0) self.URLString = URLString;
+	if (self.activityCount == 0) _currentRequest = [currentRequest copy];
 }
 
 - (BOOL) webView: (UIWebView *) webView shouldStartLoadWithRequest: (NSURLRequest *) request 
   navigationType: (UIWebViewNavigationType) navigationType
 {
-	[self captureURLString: request.URL.absoluteString];
+	self.currentRequest = request;
 	[self UI];
 
 	return YES;
@@ -227,7 +251,7 @@
 {
 	self.activityCount -= 1;
 
-	[self captureURLString: webView.request.URL.absoluteString];
+	self.currentRequest = webView.request;
 	[self UI];
 }
 
