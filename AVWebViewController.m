@@ -6,6 +6,7 @@
 //
 
 #import "AVWebViewController.h"
+#import <MessageUI/MessageUI.h>
 
 @interface AVWebViewController () <UIWebViewDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate>
 
@@ -26,6 +27,11 @@
 @synthesize webView = _webView;
 @synthesize URLString = _URLString;
 @synthesize activityCount = _activityCount;
+
+- (NSInteger) activityCount
+{
+	return _activityCount;
+}
 
 - (void) setActivityCount: (NSInteger) count
 {
@@ -186,7 +192,7 @@
 		[composer setMailComposeDelegate: self];
 		[composer setSubject: [self.webView stringByEvaluatingJavaScriptFromString: @"document.title"]];
 		[composer setMessageBody: self.URLString isHTML: NO];
-		[self presentModalViewController: composer animated: YES];
+		[self presentViewController: composer animated: YES completion: NULL];
 		[composer release];
 	}
 }
@@ -197,7 +203,7 @@
 		   didFinishWithResult: (MFMailComposeResult) result 
 						 error: (NSError *) error
 {
-	[controller dismissModalViewControllerAnimated: YES];
+	[controller dismissViewControllerAnimated: YES completion: NULL];
 }
 
 #pragma mark UIWebViewDelegate
