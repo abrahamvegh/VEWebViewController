@@ -1,6 +1,6 @@
 # What is this?
 
-`AVWebViewController` is a `UIViewController` subclass for the iPhone, designed to be used as the top view in a `UINavigationController`.
+`VEWebViewController` is a `UIViewController` subclass for the iPhone, designed to be used as the top view in a `UINavigationController`.
 
 It presents a `UIWebView` and the controls a user would expect to be available for navigating the web. An action menu is also provided, which enables a user to open the current URL in Mobile Safari, or email the current URL.
 
@@ -23,12 +23,12 @@ It presents a `UIWebView` and the controls a user would expect to be available f
 
 1. Include the contents of this repository in your Xcode project using your favorite method of moving stuff around. (Drag-and-drop usually works.)
 1. Ensure your project is linking against the `MessageUI` framework.
-1. Import the header in the file you’d like to use it with: `#import "AVWebViewController.h"`  
+1. Import the header in the file you’d like to use it with: `#import "VEWebViewController.h"`  
 (Alternatively, if you want to use the view controller in a number of places, add the `#import` statement to your `.pch` file.)
-1. Create a new instance of `AVWebViewController`, and push it onto your navigation stack:  
+1. Create a new instance of `VEWebViewController`, and push it onto your navigation stack:  
   
 ```
-AVWebViewController *webViewController = [[AVWebViewController alloc] initWithURLString: @"http://www.google.com/"];
+VEWebViewController *webViewController = [[VEWebViewController alloc] initWithURLString: @"http://www.google.com/"];
 
 [self.navigationController pushViewController: webViewController animated: YES];
 [webViewController release];
@@ -38,11 +38,11 @@ AVWebViewController *webViewController = [[AVWebViewController alloc] initWithUR
 
 # What license is this offered under?
 
-`AVWebViewController` is licensed under the BSD license. Check the [`LICENSE`](https://github.com/abrahamvegh/AVWebViewController/blob/master/LICENSE) file for the full text and terms.
+`VEWebViewController` is licensed under the BSD license. Check the [`LICENSE`](https://github.com/abrahamvegh/VEWebViewController/blob/master/LICENSE) file for the full text and terms.
 
 # Credits
 
-`AV` stands for [Abraham Vegh](http://abrahamvegh.com/), the name of the guy who wrote this cheesy readme. This project was created and is maintained by @[abrahamvegh](https://github.com/abrahamvegh).
+This project was created and is maintained by @[abrahamvegh](https://github.com/abrahamvegh).
 
 This project is largely inspired by and intended to mimic the look and feel of the in-app web browser in Tweetie 2. We’ll miss you, Tweetie.
 
@@ -52,5 +52,5 @@ Many genius contributions have been made by @[monoceroi](https://github.com/mono
 
 # Screenshots
 
-<a href="http://c.abr.vg/1s2y3S2Z2p2H2o3w0I0B"><img src="http://f.cl.ly/items/0l3R2G0b0H2Q3r152m2e/AVWebViewController-Portrait.png" width="92" height="179" /></a>
-<a href="http://c.abr.vg/0P0P1k2y2M271O3G2A1U"><img src="http://f.cl.ly/items/121t0Z3X0R0f0Z3g2l0y/AVWebViewController-Landscape.png" width="179" height="92" /></a>
+<a href="http://c.abr.vg/image/1t3X3G003i2M"><img src="http://c.abr.vg/image/1t3X3G003i2M/image.png" width="92" height="179" /></a>
+<a href="http://c.abr.vg/image/2x1B1f0A2X3P"><img src="http://c.abr.vg/image/2x1B1f0A2X3P/image.png" width="179" height="92" /></a>

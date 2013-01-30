@@ -7,34 +7,34 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1D3623260D0F684500981E51 /* AVWVC_TesterAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* AVWVC_TesterAppDelegate.m */; };
+		1D3623260D0F684500981E51 /* VEWVC_TesterAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 1D3623250D0F684500981E51 /* VEWVC_TesterAppDelegate.m */; };
 		1D60589B0D05DD56006BFB54 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 29B97316FDCFA39411CA2CEA /* main.m */; };
 		1D60589F0D05DD5A006BFB54 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1D30AB110D05D00D00671497 /* Foundation.framework */; };
 		1DF5F4E00D08C38300B7A737 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1DF5F4DF0D08C38300B7A737 /* UIKit.framework */; };
 		288765FD0DF74451002DB57D /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 288765FC0DF74451002DB57D /* CoreGraphics.framework */; };
 		28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 28AD733E0D9D9553002E5188 /* MainWindow.xib */; };
 		6742F7E916B8AD3D008FCEC4 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 6742F7E816B8AD3D008FCEC4 /* Default-568h@2x.png */; };
-		674EB17013AD596000F5D619 /* AVWebViewController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 674EB16F13AD596000F5D619 /* AVWebViewController.bundle */; };
-		674EB17813AD597700F5D619 /* AVWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 674EB17713AD597700F5D619 /* AVWebViewController.m */; };
+		674EB17013AD596000F5D619 /* VEWebViewController.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 674EB16F13AD596000F5D619 /* VEWebViewController.bundle */; };
+		674EB17813AD597700F5D619 /* VEWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 674EB17713AD597700F5D619 /* VEWebViewController.m */; };
 		676B280D13A5C4EA00A48359 /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 676B280C13A5C4EA00A48359 /* MessageUI.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		1D30AB110D05D00D00671497 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
-		1D3623240D0F684500981E51 /* AVWVC_TesterAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVWVC_TesterAppDelegate.h; sourceTree = "<group>"; };
-		1D3623250D0F684500981E51 /* AVWVC_TesterAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AVWVC_TesterAppDelegate.m; sourceTree = "<group>"; };
-		1D6058910D05DD3D006BFB54 /* AVWVC Tester.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "AVWVC Tester.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		1D3623240D0F684500981E51 /* VEWVC_TesterAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VEWVC_TesterAppDelegate.h; sourceTree = "<group>"; };
+		1D3623250D0F684500981E51 /* VEWVC_TesterAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VEWVC_TesterAppDelegate.m; sourceTree = "<group>"; };
+		1D6058910D05DD3D006BFB54 /* VEWVC Tester.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "VEWVC Tester.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		1DF5F4DF0D08C38300B7A737 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		288765FC0DF74451002DB57D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		28AD733E0D9D9553002E5188 /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
 		29B97316FDCFA39411CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		32CA4F630368D1EE00C91783 /* AVWVC_Tester_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AVWVC_Tester_Prefix.pch; sourceTree = "<group>"; };
+		32CA4F630368D1EE00C91783 /* VEWVC_Tester_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VEWVC_Tester_Prefix.pch; sourceTree = "<group>"; };
 		6742F7E816B8AD3D008FCEC4 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		674EB16F13AD596000F5D619 /* AVWebViewController.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = AVWebViewController.bundle; path = ../AVWebViewController.bundle; sourceTree = SOURCE_ROOT; };
-		674EB17613AD597700F5D619 /* AVWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AVWebViewController.h; path = ../AVWebViewController.h; sourceTree = SOURCE_ROOT; };
-		674EB17713AD597700F5D619 /* AVWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AVWebViewController.m; path = ../AVWebViewController.m; sourceTree = SOURCE_ROOT; };
+		674EB16F13AD596000F5D619 /* VEWebViewController.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = VEWebViewController.bundle; path = ../VEWebViewController.bundle; sourceTree = SOURCE_ROOT; };
+		674EB17613AD597700F5D619 /* VEWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VEWebViewController.h; path = ../VEWebViewController.h; sourceTree = SOURCE_ROOT; };
+		674EB17713AD597700F5D619 /* VEWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = VEWebViewController.m; path = ../VEWebViewController.m; sourceTree = SOURCE_ROOT; };
 		676B280C13A5C4EA00A48359 /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
-		8D1107310486CEB800E47090 /* AVWVC_Tester-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "AVWVC_Tester-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
+		8D1107310486CEB800E47090 /* VEWVC_Tester-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "VEWVC_Tester-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,11 +55,11 @@
 		080E96DDFE201D6D7F000001 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				1D3623240D0F684500981E51 /* AVWVC_TesterAppDelegate.h */,
-				1D3623250D0F684500981E51 /* AVWVC_TesterAppDelegate.m */,
-				674EB17613AD597700F5D619 /* AVWebViewController.h */,
-				674EB17713AD597700F5D619 /* AVWebViewController.m */,
-				674EB16F13AD596000F5D619 /* AVWebViewController.bundle */,
+				1D3623240D0F684500981E51 /* VEWVC_TesterAppDelegate.h */,
+				1D3623250D0F684500981E51 /* VEWVC_TesterAppDelegate.m */,
+				674EB17613AD597700F5D619 /* VEWebViewController.h */,
+				674EB17713AD597700F5D619 /* VEWebViewController.m */,
+				674EB16F13AD596000F5D619 /* VEWebViewController.bundle */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -67,7 +67,7 @@
 		19C28FACFE9D520D11CA2CBB /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				1D6058910D05DD3D006BFB54 /* AVWVC Tester.app */,
+				1D6058910D05DD3D006BFB54 /* VEWVC Tester.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -87,7 +87,7 @@
 		29B97315FDCFA39411CA2CEA /* Other Sources */ = {
 			isa = PBXGroup;
 			children = (
-				32CA4F630368D1EE00C91783 /* AVWVC_Tester_Prefix.pch */,
+				32CA4F630368D1EE00C91783 /* VEWVC_Tester_Prefix.pch */,
 				29B97316FDCFA39411CA2CEA /* main.m */,
 			);
 			name = "Other Sources";
@@ -97,7 +97,7 @@
 			isa = PBXGroup;
 			children = (
 				28AD733E0D9D9553002E5188 /* MainWindow.xib */,
-				8D1107310486CEB800E47090 /* AVWVC_Tester-Info.plist */,
+				8D1107310486CEB800E47090 /* VEWVC_Tester-Info.plist */,
 				6742F7E816B8AD3D008FCEC4 /* Default-568h@2x.png */,
 			);
 			name = Resources;
@@ -117,9 +117,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		1D6058900D05DD3D006BFB54 /* AVWVC Tester */ = {
+		1D6058900D05DD3D006BFB54 /* VEWVC Tester */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "AVWVC Tester" */;
+			buildConfigurationList = 1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "VEWVC Tester" */;
 			buildPhases = (
 				1D60588D0D05DD3D006BFB54 /* Resources */,
 				1D60588E0D05DD3D006BFB54 /* Sources */,
@@ -129,9 +129,9 @@
 			);
 			dependencies = (
 			);
-			name = "AVWVC Tester";
-			productName = "AVWVC Tester";
-			productReference = 1D6058910D05DD3D006BFB54 /* AVWVC Tester.app */;
+			name = "VEWVC Tester";
+			productName = "VEWVC Tester";
+			productReference = 1D6058910D05DD3D006BFB54 /* VEWVC Tester.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -142,7 +142,7 @@
 			attributes = {
 				LastUpgradeCheck = 0460;
 			};
-			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "AVWVC Tester" */;
+			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "VEWVC Tester" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 1;
@@ -156,7 +156,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				1D6058900D05DD3D006BFB54 /* AVWVC Tester */,
+				1D6058900D05DD3D006BFB54 /* VEWVC Tester */,
 			);
 		};
 /* End PBXProject section */
@@ -167,7 +167,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				28AD733F0D9D9553002E5188 /* MainWindow.xib in Resources */,
-				674EB17013AD596000F5D619 /* AVWebViewController.bundle in Resources */,
+				674EB17013AD596000F5D619 /* VEWebViewController.bundle in Resources */,
 				6742F7E916B8AD3D008FCEC4 /* Default-568h@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -180,8 +180,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				1D60589B0D05DD56006BFB54 /* main.m in Sources */,
-				1D3623260D0F684500981E51 /* AVWVC_TesterAppDelegate.m in Sources */,
-				674EB17813AD597700F5D619 /* AVWebViewController.m in Sources */,
+				1D3623260D0F684500981E51 /* VEWVC_TesterAppDelegate.m in Sources */,
+				674EB17813AD597700F5D619 /* VEWebViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -196,9 +196,9 @@
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = AVWVC_Tester_Prefix.pch;
-				INFOPLIST_FILE = "AVWVC_Tester-Info.plist";
-				PRODUCT_NAME = "AVWVC Tester";
+				GCC_PREFIX_HEADER = VEWVC_Tester_Prefix.pch;
+				INFOPLIST_FILE = "VEWVC_Tester-Info.plist";
+				PRODUCT_NAME = "VEWVC Tester";
 			};
 			name = Debug;
 		};
@@ -208,9 +208,9 @@
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = AVWVC_Tester_Prefix.pch;
-				INFOPLIST_FILE = "AVWVC_Tester-Info.plist";
-				PRODUCT_NAME = "AVWVC Tester";
+				GCC_PREFIX_HEADER = VEWVC_Tester_Prefix.pch;
+				INFOPLIST_FILE = "VEWVC_Tester-Info.plist";
+				PRODUCT_NAME = "VEWVC Tester";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -243,7 +243,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "AVWVC Tester" */ = {
+		1D6058960D05DD3E006BFB54 /* Build configuration list for PBXNativeTarget "VEWVC Tester" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				1D6058940D05DD3E006BFB54 /* Debug */,
@@ -252,7 +252,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "AVWVC Tester" */ = {
+		C01FCF4E08A954540054247B /* Build configuration list for PBXProject "VEWVC Tester" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				C01FCF4F08A954540054247B /* Debug */,

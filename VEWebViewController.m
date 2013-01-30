@@ -1,14 +1,14 @@
 //
-//  AVWebViewController.m
+//  VEWebViewController.m
 //
 //  Created by Abraham Vegh on 6/12/11.
 //  Copyright 2011 Abraham Vegh. All rights reserved.
 //
 
-#import "AVWebViewController.h"
+#import "VEWebViewController.h"
 #import <MessageUI/MessageUI.h>
 
-@interface AVWebViewController () <UIWebViewDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate>
+@interface VEWebViewController () <UIWebViewDelegate, UIActionSheetDelegate, MFMailComposeViewControllerDelegate>
 
 @property BOOL toolbarWasHidden;
 @property (retain) UIWebView *webView;
@@ -21,7 +21,7 @@
 
 @end
 
-@implementation AVWebViewController
+@implementation VEWebViewController
 
 @synthesize toolbarWasHidden = _toolbarWasHidden;
 @synthesize webView = _webView;
@@ -119,9 +119,9 @@
 	self.title = [self.webView stringByEvaluatingJavaScriptFromString: @"document.title"];
 
 	UIBarButtonItem *fixedSpace = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemFixedSpace target: nil action: nil];
-	UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage: [UIImage imageNamed: @"AVWebViewController.bundle/back"] style: UIBarButtonItemStylePlain target: self.webView action: @selector(goBack)];
+	UIBarButtonItem *backButton = [[UIBarButtonItem alloc] initWithImage: [UIImage imageNamed: @"VEWebViewController.bundle/back"] style: UIBarButtonItemStylePlain target: self.webView action: @selector(goBack)];
 	UIBarButtonItem *flexibleSpace1 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemFlexibleSpace target: nil action: nil];
-	UIBarButtonItem *forwardButton = [[UIBarButtonItem alloc] initWithImage: [UIImage imageNamed: @"AVWebViewController.bundle/forward"] style: UIBarButtonItemStylePlain target: self.webView action: @selector(goForward)];
+	UIBarButtonItem *forwardButton = [[UIBarButtonItem alloc] initWithImage: [UIImage imageNamed: @"VEWebViewController.bundle/forward"] style: UIBarButtonItemStylePlain target: self.webView action: @selector(goForward)];
 	UIBarButtonItem *flexibleSpace2 = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemFlexibleSpace target: nil action: nil];
 	UIActivityIndicatorView *indicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle: UIActivityIndicatorViewStyleWhite];
 	UIBarButtonItem *indicatorItem = [[UIBarButtonItem alloc] initWithCustomView: indicatorView];

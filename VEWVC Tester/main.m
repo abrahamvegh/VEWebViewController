@@ -1,6 +1,6 @@
 //
 //  main.m
-//  AVWVC Tester
+//  VEWVC Tester
 //
 //  Created by Abraham Vegh on 6/13/11.
 //  Copyright 2011 Abraham Vegh. All rights reserved.
